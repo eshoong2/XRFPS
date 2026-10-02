@@ -1,0 +1,26 @@
+# Unreal Engine
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# IDE
+.vs/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# Android packaging
+*.apk
+*.obb
+
+# OS
+Thumbs.db
+.DS_Store
