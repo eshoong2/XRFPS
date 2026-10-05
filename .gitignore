@@ -21,6 +21,7 @@ Plugins/**/Intermediate/
 *.apk
 *.obb
 
-# OS
+# OS / Office 임시 파일
 Thumbs.db
 .DS_Store
+~$*

@@ -5,6 +5,10 @@ HMD와 손/컨트롤러 트래킹을 활용해 플레이어의 **실제 자세�
 
 > 🚧 진행 중 — 현재 단계: **M0 (환경 구축)**
 
+<!-- 대표 GIF: docs/images/demo.gif 를 추가한 뒤 아래 주석을 해제
+![demo](docs/images/demo.gif)
+-->
+
 ## 핵심 특징 (MVP)
 
 - **무기 핸들링**: 서버가 원본 트래킹 데이터로 조준 안정도를 계산해 탄 퍼짐에 반영
@@ -34,9 +38,33 @@ HMD와 손/컨트롤러 트래킹을 활용해 플레이어의 **실제 자세�
 - 설계 합의 전에는 AI가 대규모 코드를 작성하지 않는다. 최종 결정은 개발자가 한다.
 - 작업마다 사용한 모델, 선택 이유, AI의 오류와 수정, 검증 방법을 [`docs/ai-log/`](docs/ai-log/)에 남긴다.
 
+## 저장소 구조
+
+```
+XRFPS/
+├─ README.md                 ← 이 문서 (프로젝트 소개)
+├─ docs/
+│  ├─ design/                ← 기능별 설계 문서
+│  ├─ decisions/             ← 결정 기록(ADR)
+│  ├─ troubleshooting/       ← 버그 증상·원인·해결
+│  ├─ ai-log/                ← AI 활용 기록
+│  ├─ portfolio/             ← 노션 포트폴리오 페이지 원본
+│  └─ images/                ← README·노션용 스크린샷, GIF
+│
+│  (M0 이후 UE 프로젝트가 루트에 추가됨)
+├─ XRFPS.uproject
+├─ Config/
+├─ Source/XRFPS/             ← C++ 게임 로직
+└─ Content/                  ← 에셋 (Git LFS)
+```
+
+- `.uasset`, `.umap` 등 바이너리 에셋은 **Git LFS**로 관리한다. ([.gitattributes](.gitattributes))
+
 ## 문서
 
-- [`docs/design/`](docs/design/): 기능별 설계 문서 — 시작은 [00-vision.md](docs/design/00-vision.md)
-- [`docs/decisions/`](docs/decisions/): 결정 기록(ADR)
-- [`docs/troubleshooting/`](docs/troubleshooting/): 버그의 증상·원인·해결
-- [`docs/ai-log/`](docs/ai-log/): AI 활용 기록
+| 폴더 | 내용 |
+|---|---|
+| [docs/design/](docs/design/) | 기능별 설계 문서 — 시작은 [00-vision.md](docs/design/00-vision.md) |
+| [docs/decisions/](docs/decisions/) | 결정 기록(ADR) |
+| [docs/troubleshooting/](docs/troubleshooting/) | 버그의 증상·원인·해결 |
+| [docs/ai-log/](docs/ai-log/) | AI 활용 기록 |
