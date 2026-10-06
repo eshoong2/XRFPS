@@ -4,7 +4,7 @@
 
 📌 대표 시연 GIF 또는 YouTube 영상 (30초 이내)
 
-🔗 GitHub: https://github.com/<GITHUB_ID>/XRFPS
+🔗 GitHub: https://github.com/eshoong2/XRFPS
 
 ---
 
@@ -18,7 +18,7 @@
 | 플랫폼 | Meta Quest 3S (단독 Android 빌드) |
 | 네트워크 | Listen Server, 서버 권위(Server Authority) |
 | AI 활용 | Claude Code — 작업별 모델 선택, 설계 리뷰, 구현 보조 |
-| 저장소 | https://github.com/<GITHUB_ID>/XRFPS |
+| 저장소 | https://github.com/eshoong2/XRFPS |
 
 ### 기획 의도
 
@@ -39,7 +39,7 @@
 - 클라이언트는 원본 트래킹만 전송하고, "안정도" 같은 판정 결과는 보내지 않음
 
 🔗 코드: 📌 `Source/XRFPS/...` 링크
-🔗 설계: https://github.com/<GITHUB_ID>/XRFPS/blob/main/docs/design/00-vision.md
+🔗 설계: https://github.com/eshoong2/XRFPS/blob/main/docs/design/00-vision.md
 
 ### 2-2. 양손 파지
 
@@ -49,7 +49,7 @@
 - 파지 판정 → 흔들림 보정 → 조준 안정도 → 탄 퍼짐으로 이어지는 하나의 시스템
 
 🔗 코드: 📌 링크
-🔗 결정 기록: https://github.com/<GITHUB_ID>/XRFPS/blob/main/docs/decisions/ADR-0002-mvp-mechanics.md
+🔗 결정 기록: https://github.com/eshoong2/XRFPS/blob/main/docs/decisions/ADR-0002-mvp-mechanics.md
 
 ### 2-3. 서버 권위 트래킹 동기화와 검증
 
@@ -85,7 +85,7 @@
 - **선택**: ③ — 데스크톱 클라이언트가 두 번째 플레이어 역할까지 담당
 - **결과**: 📌
 
-🔗 https://github.com/<GITHUB_ID>/XRFPS/blob/main/docs/decisions/ADR-0001-dev-workflow.md
+🔗 https://github.com/eshoong2/XRFPS/blob/main/docs/decisions/ADR-0001-dev-workflow.md
 
 ### 4-2. 클라이언트에서만 측정되는 트래킹을 서버가 신뢰하는 방법
 
@@ -123,7 +123,7 @@
 |---|---|---|---|
 | 📌 | | | |
 
-🔗 전체 기록: https://github.com/<GITHUB_ID>/XRFPS/tree/main/docs/ai-log
+🔗 전체 기록: https://github.com/eshoong2/XRFPS/tree/main/docs/ai-log
 
 ---
 
@@ -133,7 +133,7 @@
 |---|---|---|---|
 | 📌 | | | 🔗 |
 
-🔗 전체 기록: https://github.com/<GITHUB_ID>/XRFPS/tree/main/docs/troubleshooting
+🔗 전체 기록: https://github.com/eshoong2/XRFPS/tree/main/docs/troubleshooting
 
 ---
 
