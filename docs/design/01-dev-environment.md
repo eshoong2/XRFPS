@@ -38,9 +38,11 @@
 > 왜: Turnkey 자동 설치는 "기존 Java·Android 환경변수가 없는 깨끗한 PC"를 전제로 한다.
 
 ### 단계 3. 엔진 설치
-- [ ] Launcher > Unreal Engine > 라이브러리 > 5.8.3 설치
-- [ ] 옵션: Core, Templates & Feature Packs, Engine Source, Target Platforms는 **Android만**, Editor symbols 해제
-- [ ] 설치 화면에 표시된 용량 기록: ______ GB
+- [x] Launcher > Unreal Engine > 라이브러리 > `+` > **5.8.0** 선택 (Launcher는 마이너 버전만 표시하고 최신 핫픽스를 설치함) → 설치 후 `Engine\Build\Build.version`으로 5.8.3 확인
+- [x] 옵션 (설치 버튼 → 경로 창의 "옵션"): Core, Templates & Feature Packs, Engine Source, Target Platforms는 **Android만** / Editor symbols, MetaHuman Creator 코어 데이터 해제
+- [x] 설치 화면에 표시된 용량: 다운로드 **13.7GB**, 필요 저장 공간 **39.0GB**
+- [x] 설치 확인 (2026-10-08): `Build.version` = **5.8.3** (CL 58210709), 실제 39GB, Android 바이너리·엔진 소스·OpenXR 플러그인 포함
+  - VR 템플릿은 Blueprint 버전(`TP_VirtualRealityBP`)만 제공 → C++ 프로젝트는 별도 생성하고 VR 템플릿은 구조 참고용
 
 ### 단계 4. Android 환경 (Turnkey)
 - [ ] 에디터 실행 → Platforms > SDK Management > Android > Install Sdk, 라이선스는 `Y`
