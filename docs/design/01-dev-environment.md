@@ -11,7 +11,7 @@
 | 엔진 | UE 5.8.3 (Epic Launcher) |
 | IDE / 컴파일러 | VS Community 2022 17.14 + MSVC 14.44.35207 (기존 설치) |
 | Launcher 설치 옵션 | Core + Templates & Feature Packs + Target Platform: Android + Engine Source (Editor symbols 제외) |
-| Android | Turnkey 자동 설치 (NDK r27c, OpenJDK 21) |
+| Android | Turnkey 자동 설치 (NDK r27c, SDK 36, Android Studio JBR 17) |
 | XR | 엔진 기본 OpenXR만 |
 | Quest 프로젝트 설정 | minSdk 32, targetSdk 34, arm64, Vulkan, Forward, MSAA 4x, Multi-View, Mobile HDR off |
 
@@ -45,8 +45,9 @@
   - VR 템플릿은 Blueprint 버전(`TP_VirtualRealityBP`)만 제공 → C++ 프로젝트는 별도 생성하고 VR 템플릿은 구조 참고용
 
 ### 단계 4. Android 환경 (Turnkey)
-- [ ] 에디터 실행 → Platforms > SDK Management > Android > Install Sdk, 라이선스는 `Y`
-- [ ] 확인: `java -version`이 21, NDK 폴더가 27.2.x, `adb`가 Android SDK의 platform-tools를 가리킴
+- [x] 에디터 실행 → Platforms > SDK Management > Android > Install Sdk, 라이선스는 `Y`
+  - 에뮬레이터 생성 단계만 실패 → "다시 시도" 창에서 **아니오** ([트러블슈팅](../troubleshooting/2026-10-08-turnkey-android-emulator.md))
+- [x] 확인 (2026-10-08): `Turnkey -command=VerifySdk -platform=Android` → **Status=Valid**, NDK r27c, SDK 36 / build-tools 36.0.0, Java는 Android Studio JBR 17.0.11 (Turnkey가 설정한 값), `adb`는 SDK platform-tools
 
 ### 단계 5. Quest 연결
 - [ ] Quest 개발자 모드 켜기 (Meta Horizon 앱)
