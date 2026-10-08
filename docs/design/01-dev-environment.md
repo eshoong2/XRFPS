@@ -20,18 +20,20 @@
 - VS 2022 17.14, MSVC 14.44.35207, Windows SDK 10.0.22621 / 10.0.26100 설치됨
 - Oracle JDK 21.0.6 설치, 시스템 `JAVA_HOME` 설정됨 (사용하지 않음)
 - Android SDK / Android Studio 없음, Epic Launcher 없음
-- RAM 16GB 싱글 채널 → 32GB 증설 예정. **무거운 C++ 빌드는 증설 후 진행**
+- RAM 16GB 싱글 채널 → **2026-10-08 32GB 듀얼 채널로 증설 완료** (Channel A/B 각 16GB, 4800MT/s, 내장 GPU 예약 4GB → OS 가용 약 27GB)
 
 ## 체크리스트
 
 ### 단계 1. 계정과 기기 (시간이 걸리므로 먼저)
-- [ ] Meta 개발자 계정 인증 + 개발자 조직(팀) 생성
-- [ ] Epic Games Launcher 설치, 로그인
+- [x] Meta 개발자 조직(팀) 생성
+- [ ] 계정 인증 확인 → 단계 5에서 개발자 모드 토글이 켜지면 완료
+- [x] Epic Games Launcher 설치, 로그인
 
 ### 단계 2. PC 정리
-- [ ] Oracle JDK 21 제거 (설정 > 앱)
-- [ ] 시스템 환경 변수 `JAVA_HOME` 삭제
-- [ ] VS Installer에서 **.NET 데스크톱 개발** 워크로드 추가
+- [x] Oracle JDK 21 제거 (설정 > 앱)
+- [x] 시스템 환경 변수 `JAVA_HOME` 삭제
+- [x] 시스템 `Path`의 `%JAVA_HOME%\bin` 항목 삭제
+- [x] VS Installer에서 **.NET 데스크톱 개발** 워크로드 추가
 
 > 왜: Turnkey 자동 설치는 "기존 Java·Android 환경변수가 없는 깨끗한 PC"를 전제로 한다.
 
@@ -50,7 +52,7 @@
 - [ ] USB 연결 → 헤드셋에서 USB 디버깅 "항상 허용"
 - [ ] `adb devices`에 기기 표시
 
-### 단계 6. 프로젝트 생성 *(RAM 증설 후)*
+### 단계 6. 프로젝트 생성
 - [ ] C++ 프로젝트 생성, 경로 `C:\Dev\XRFPS` (기존 저장소 루트)
 - [ ] 빌드 로그에서 MSVC 14.44 선택 확인
 - [ ] OpenXR 켜기, 다른 벤더 XR 플러그인(Oculus, SteamVR, PICO) 끄기
