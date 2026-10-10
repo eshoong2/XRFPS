@@ -33,6 +33,15 @@
 
    결과: `Android: (Status=Valid, MinAllowed_Sdk=r27c, MaxAllowed_Sdk=r29, Current_Sdk=r27c, ...)`
 
+3. 정리 (2026-10-10): 쓰지 않는 에뮬레이터 관련 파일 약 4.6GB 삭제 → 다시 VerifySdk 실행해 **Status=Valid 유지** 확인
+
+   ```
+   sdkmanager --uninstall "system-images;android-36;google_apis_playstore;x86_64" emulator
+   ```
+
+   - Turnkey 다운로드 캐시(`%TEMP%\Turnkey\DownloadCache`, Android Studio 설치 파일 등 1.3GB)도 삭제
+   - 참고: 실행 시 "sdkmanager는 deprecated, `android sdk`(Android CLI)로 대체"라는 경고가 나옴. 지금은 동작하지만 이후 Android 도구 업데이트 때 확인 필요
+
 ## 설치된 결과
 
 | 항목 | 값 |
