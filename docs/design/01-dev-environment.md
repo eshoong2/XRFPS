@@ -64,7 +64,8 @@
   - VR 템플릿과 다른 점: `bPackageForOpenXRImmersive=False` (Android XR용 Khronos 표준 항목만 추가하는 옵션, 엔진 `OpenXR_APL.xml`로 확인)
   - INTERNET 권한은 엔진이 매니페스트에 기본 추가 (`UEDeployAndroid.cs`로 확인)
 - [x] 렌더링: Mobile Shading Path = Forward, MSAA 4x, Mobile Multi-View on, Mobile HDR off, Lumen/Nanite/VSM off
-- [ ] 에디터에서 프로젝트를 열어 Project Settings에 값이 반영됐는지 확인
+- [x] 에디터에서 프로젝트를 열어 Project Settings에 값이 반영됐는지 확인 (2026-10-13, 전 항목 일치)
+  - 에디터가 `DefaultInput.ini`와 Android File Server 섹션을 자동 생성. ini 주석은 유지됨
   - 주의: 에디터에서 설정을 바꾸면 해당 ini 섹션이 다시 저장되며 주석이 사라질 수 있음 → 설정 변경 후 diff 확인
 
 ### 단계 7. Quest 첫 실행
