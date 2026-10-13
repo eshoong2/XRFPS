@@ -56,11 +56,16 @@
 - [ ] `adb devices`에 기기 표시
 
 ### 단계 6. 프로젝트 생성
-- [ ] C++ 프로젝트 생성, 경로 `C:\Dev\XRFPS` (기존 저장소 루트)
-- [ ] 빌드 로그에서 MSVC 14.44 선택 확인
-- [ ] OpenXR 켜기, 다른 벤더 XR 플러그인(Oculus, SteamVR, PICO) 끄기
-- [ ] Android 설정: Package for Meta Quest devices, minSdk 32, targetSdk 34, arm64, Vulkan만
-- [ ] 렌더링: Mobile Shading Path = Forward, MSAA 4x, Mobile Multi-View on, Mobile HDR off, Lumen/Nanite/VSM off
+- [x] C++ 프로젝트 생성, 경로 `C:\Dev\XRFPS` (기존 저장소 루트)
+  - 저장소 폴더가 이미 있어 에디터 마법사 대신 파일로 생성. 뼈대(`Source/`의 Target·Build.cs)는 Epic 공식 템플릿 `Templates\TP_Blank`와 동일
+- [x] 빌드 로그에서 MSVC 14.44 선택 확인 (2026-10-13): `Visual Studio 14.44.35227 toolchain (...\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK`, 경고 0, 68초
+- [x] OpenXR 켜기 (`XRFPS.uproject`). 엔진 확인 결과 OpenXR는 기본 꺼짐, Oculus·SteamVR 플러그인은 엔진에 없음, PICOController는 기본 꺼짐
+- [x] Android 설정 (`Config/DefaultEngine.ini`): Package for Meta Quest devices, minSdk 32, targetSdk 34, arm64, Vulkan만, supportedDevices 직접 지정
+  - VR 템플릿과 다른 점: `bPackageForOpenXRImmersive=False` (Android XR용 Khronos 표준 항목만 추가하는 옵션, 엔진 `OpenXR_APL.xml`로 확인)
+  - INTERNET 권한은 엔진이 매니페스트에 기본 추가 (`UEDeployAndroid.cs`로 확인)
+- [x] 렌더링: Mobile Shading Path = Forward, MSAA 4x, Mobile Multi-View on, Mobile HDR off, Lumen/Nanite/VSM off
+- [ ] 에디터에서 프로젝트를 열어 Project Settings에 값이 반영됐는지 확인
+  - 주의: 에디터에서 설정을 바꾸면 해당 ini 섹션이 다시 저장되며 주석이 사라질 수 있음 → 설정 변경 후 diff 확인
 
 ### 단계 7. Quest 첫 실행
 - [ ] 빈 레벨을 Android(ASTC)로 패키징해 설치
