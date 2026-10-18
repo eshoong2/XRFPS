@@ -8,3 +8,4 @@ ADR(Architecture Decision Record)은 "무엇을 왜 그렇게 정했는지"를 �
 | 0001 | [개발·테스트 방식: 데스크톱 시뮬레이션 + 주기적 Quest 빌드](ADR-0001-dev-workflow.md) | 2026-10-02 | 채택 |
 | 0002 | [MVP 전투 메커니즘: 조준 안정도 + 양손 파지](ADR-0002-mvp-mechanics.md) | 2026-10-02 | 채택 |
 | 0003 | [엔진·툴체인·XR 플러그인: UE 5.8.3 + VS 2022 + OpenXR](ADR-0003-engine-toolchain-xr.md) | 2026-10-07 | 채택 |
+| 0004 | [M1 플레이어 구조와 입력 소스 추상화](ADR-0004-m1-pawn-input-architecture.md) | 2026-10-18 | 채택 |
