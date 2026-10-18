@@ -46,17 +46,21 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop", meta = (ClampMin = "0", ClampMax = "89"))
 	float MaxHeadPitch = 85.f;
 
-	/** 머리 기준 오른손 Grip 위치(cm). X 앞, Y 오른쪽, Z 위 */
+	// 데스크톱 손 위치는 "실제 VR 자세"가 아니라 "화면에서 보이는 위치"가 기준이다.
+	// 카메라 세로 시야가 위아래 약 ±30°라서, 눈높이에서 약 25° 이상 아래에 두면 화면 밖으로 나간다.
+	// (실제 VR에서의 손 위치는 Quest가 주므로 이 값과 무관하다)
+
+	/** 머리 기준 오른손 Grip 위치(cm). X 앞, Y 오른쪽, Z 위. 화면 오른쪽 아래에 보인다 */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop")
-	FVector RightHandOffset = FVector(35.f, 18.f, -30.f);
+	FVector RightHandOffset = FVector(45.f, 15.f, -15.f);
 
-	/** 프리셋 1(한 손 들기): 머리 기준 왼손 Grip 위치(cm). 왼손은 몸 옆으로 내림 */
+	/** 프리셋 1(한 손 들기): 머리 기준 왼손 Grip 위치(cm). 화면 왼쪽 아래에 보인다 */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Preset")
-	FVector OneHandLeftOffset = FVector(5.f, -25.f, -60.f);
+	FVector OneHandLeftOffset = FVector(40.f, -22.f, -18.f);
 
-	/** 프리셋 2(양손 파지): 머리 기준 왼손 Grip 위치(cm). 오른손 앞 약 25cm, 총열 아래쪽 */
+	/** 프리셋 2(양손 파지): 머리 기준 왼손 Grip 위치(cm). 오른손 앞 25cm, 옆·아래로 각 2cm (총열 선 5cm 이내) */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Preset")
-	FVector TwoHandLeftOffset = FVector(60.f, 16.f, -33.f);
+	FVector TwoHandLeftOffset = FVector(70.f, 13.f, -17.f);
 
 	/** 미세 조정 키를 누르고 있을 때 왼손이 움직이는 속도(cm/초) */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Adjust", meta = (ClampMin = "1"))
