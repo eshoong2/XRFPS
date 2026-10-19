@@ -58,9 +58,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Preset")
 	FVector OneHandLeftOffset = FVector(40.f, -22.f, -18.f);
 
-	/** 프리셋 2(양손 파지): 머리 기준 왼손 Grip 위치(cm). 오른손 앞 25cm, 옆·아래로 각 2cm (총열 선 5cm 이내) */
+	/**
+	 * 프리셋 2(양손 파지): 머리 기준 왼손 Grip 위치(cm).
+	 * 오른손 앞 25cm, 위로 5cm. 임시 소총의 총열 중심선이 손잡이보다 9cm 위라서, 왼손은 총열 4cm 아래가 된다.
+	 * (판정 기준: 총열 선 5cm 이내, 두 손 거리 20~30cm → 이 위치는 약 25.5cm)
+	 */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Preset")
-	FVector TwoHandLeftOffset = FVector(70.f, 13.f, -17.f);
+	FVector TwoHandLeftOffset = FVector(70.f, 15.f, -10.f);
 
 	/** 미세 조정 키를 누르고 있을 때 왼손이 움직이는 속도(cm/초) */
 	UPROPERTY(EditAnywhere, Category = "XR|Desktop|Adjust", meta = (ClampMin = "1"))

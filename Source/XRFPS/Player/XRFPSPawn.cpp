@@ -13,6 +13,8 @@
 #include "Input/XRInputSource.h"
 #include "MotionControllerComponent.h"
 #include "Player/XRPoseComponent.h"
+#include "XRFPS.h"
+#include "Weapon/XRWeapon.h"
 
 namespace XRFPSPawnNames
 {
@@ -61,6 +63,61 @@ AXRFPSPawn::AXRFPSPawn()
 	Pose = CreateDefaultSubobject<UXRPoseComponent>(TEXT("Pose"));
 	DesktopInput = CreateDefaultSubobject<UXRDesktopInputSource>(TEXT("DesktopInput"));
 	Debug = CreateDefaultSubobject<UXRDebugDrawComponent>(TEXT("Debug"));
+
+	DefaultWeaponClass = AXRWeapon::StaticClass();
+}
+
+void AXRFPSPawn::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// M1: Pawn이 직접 기본 무기를 만들어 장착한다. (M2: 서버가 라운드 시작 때 만든다)
+	UWorld* World = GetWorld();
+	if (!World || !DefaultWeaponClass)
+	{
+		return;
+	}
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = this;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AXRWeapon* Weapon = World->SpawnActor<AXRWeapon>(DefaultWeaponClass, GetActorTransform(), SpawnParams);
+	EquipWeapon(Weapon);
+}
+
+void AXRFPSPawn::EquipWeapon(AXRWeapon* Weapon)
+{
+	UXRHandComponent* Hand = GetPrimaryHand();
+	if (!Weapon || !Hand || !Hand->GetGripController())
+	{
+		return;
+	}
+
+	// 이미 들고 있던 무기는 제거한다. (M1은 무기 교체가 없어 실행되지 않지만, 교체를 넣을 때를 위해)
+	if (AXRWeapon* OldWeapon = Hand->GetHeldWeapon())
+	{
+		if (OldWeapon != Weapon)
+		{
+			OldWeapon->Destroy();
+		}
+	}
+
+	// Snap: 무기 원점(손잡이를 쥔 손의 중심)을 주 손 Grip에 정확히 맞춘다. 크기는 무기 그대로.
+	// 손과 총 사이 오프셋이 항상 0이라, 서버는 Grip 포즈만으로 총구를 다시 계산할 수 있다. (ADR-0004)
+	Weapon->SetOwner(this);
+	Weapon->AttachToComponent(Hand->GetGripController(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	Hand->SetHeldWeapon(Weapon);
+
+	UE_LOG(LogXRFPS, Log, TEXT("무기 장착: %s -> %s 손"), *Weapon->GetName(),
+		Hand->GetSide() == EXRHandSide::Left ? TEXT("왼") : TEXT("오른"));
+}
+
+AXRWeapon* AXRFPSPawn::GetEquippedWeapon() const
+{
+	const UXRHandComponent* Hand = GetPrimaryHand();
+	return Hand ? Hand->GetHeldWeapon() : nullptr;
 }
 
 UXRHandComponent* AXRFPSPawn::GetHand(EXRHandSide Side) const
@@ -92,7 +149,7 @@ void AXRFPSPawn::Tick(float DeltaSeconds)
 	LeftHand->UpdateFromFrame(Frame);
 	RightHand->UpdateFromFrame(Frame);
 
-	// (M1 3단계) 4. 총
+	// 4. 총: 주 손 Grip에 붙어 있어 손을 따라 자동으로 움직인다. (M1 5단계에서 양손 파지 방향 보정 추가)
 
 	// 5. 디버그는 마지막. 이번 프레임 갱신이 모두 끝난 상태를 그린다.
 	Debug->DrawDebug();
