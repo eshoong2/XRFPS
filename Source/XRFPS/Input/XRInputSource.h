@@ -35,6 +35,13 @@ public:
 	/** 디버그 화면에 표시할 이름 */
 	virtual FString GetSourceName() const { return TEXT("None"); }
 
+	/**
+	 * 프레임의 포즈를 Camera·MotionController 컴포넌트에 직접 적용해야 하는가.
+	 * - 데스크톱, 녹화 재생: 엔진이 컴포넌트를 움직여 주지 않으므로 true
+	 * - OpenXR: 엔진이 헤드셋·컨트롤러를 따라 컴포넌트를 움직이므로 false (M1 6단계에서 override)
+	 */
+	virtual bool ShouldApplyFrameToComponents() const { return true; }
+
 	/** 이 소스가 쓰는 입력 매핑. Pawn이 플레이어의 입력 서브시스템에 등록한다. 없으면 nullptr */
 	virtual UInputMappingContext* GetMappingContext() { return nullptr; }
 

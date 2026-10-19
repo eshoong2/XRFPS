@@ -40,9 +40,6 @@ public:
 	UXRInputSource* SelectAvailableSource() const;
 
 private:
-	/** 머리·양손 축과 입력 상태를 화면에 그린다. (M1 2단계에서 디버그 컴포넌트로 옮길 예정) */
-	void DrawDebugPoses() const;
-
 	UPROPERTY(Transient)
 	TObjectPtr<UXRInputSource> ActiveSource;
 
