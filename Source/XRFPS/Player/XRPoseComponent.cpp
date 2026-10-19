@@ -2,21 +2,9 @@
 
 #include "Player/XRPoseComponent.h"
 
-#include "DrawDebugHelpers.h"
-#include "Engine/Engine.h"
 #include "GameFramework/Actor.h"
-#include "HAL/IConsoleManager.h"
 #include "Input/XRInputSource.h"
 #include "XRFPS.h"
-
-namespace XRPoseDebug
-{
-	static TAutoConsoleVariable<bool> CVarDrawPoses(
-		TEXT("xr.Debug.DrawPoses"),
-		true,
-		TEXT("머리·양손 포즈 축과 입력 상태를 화면에 그린다."),
-		ECVF_Cheat);
-}
 
 UXRPoseComponent::UXRPoseComponent()
 {
@@ -70,49 +58,4 @@ void UXRPoseComponent::UpdateFrame()
 	NewFrame.TimeSeconds = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0;
 
 	CurrentFrame = NewFrame;
-
-	if (XRPoseDebug::CVarDrawPoses.GetValueOnGameThread())
-	{
-		DrawDebugPoses();
-	}
-}
-
-void UXRPoseComponent::DrawDebugPoses() const
-{
-	const AActor* Owner = GetOwner();
-	UWorld* World = GetWorld();
-	if (!Owner || !World)
-	{
-		return;
-	}
-
-	// 프레임의 포즈는 VROrigin 기준이다. Pawn의 루트(VROrigin)를 곱해 월드 좌표로 바꾼다.
-	const FTransform OriginToWorld = Owner->GetActorTransform();
-
-	auto DrawAxes = [World, &OriginToWorld](const FTransform& LocalPose, float Scale)
-	{
-		const FTransform WorldPose = LocalPose * OriginToWorld;
-		DrawDebugCoordinateSystem(World, WorldPose.GetLocation(), WorldPose.Rotator(), Scale, false, -1.f, 0, 0.5f);
-	};
-
-	// 데스크톱에서는 카메라가 머리 위치에 있어 머리 축은 안 보인다. 손 축이 잘 보이게 크게 그린다.
-	DrawAxes(CurrentFrame.Head, 10.f);
-	DrawAxes(CurrentFrame.LeftGrip, 8.f);
-	DrawAxes(CurrentFrame.RightGrip, 8.f);
-
-	if (GEngine)
-	{
-		const FString Status = FString::Printf(
-			TEXT("Input: %s | Frame %d | Trigger L %.2f R %.2f | Tracked H%d L%d R%d"),
-			ActiveSource ? *ActiveSource->GetSourceName() : TEXT("None"),
-			CurrentFrame.FrameNumber,
-			CurrentFrame.LeftTrigger,
-			CurrentFrame.RightTrigger,
-			CurrentFrame.bHeadTracked ? 1 : 0,
-			CurrentFrame.bLeftHandTracked ? 1 : 0,
-			CurrentFrame.bRightHandTracked ? 1 : 0);
-
-		// Key를 고정하면 매 프레임 새 줄이 쌓이지 않고 같은 줄이 갱신된다.
-		GEngine->AddOnScreenDebugMessage(static_cast<uint64>(GetUniqueID()), 0.f, FColor::Cyan, Status);
-	}
 }
