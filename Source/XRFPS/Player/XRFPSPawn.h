@@ -7,6 +7,7 @@
 #include "Player/XRHandComponent.h"
 #include "XRFPSPawn.generated.h"
 
+class AXRWeapon;
 class UCameraComponent;
 class UMotionControllerComponent;
 class UXRDebugDrawComponent;
@@ -27,7 +28,9 @@ struct FXRInputFrame;
  *  ├─ DesktopInput                          키보드·마우스 입력 소스
  *  └─ Debug                                 디버그 표시
  *
- * Tick 순서: 입력 → (필요하면) 컴포넌트에 포즈 적용 → 손 → (M1 3단계) 총 → 디버그
+ * 총(AXRWeapon)은 별도 Actor로, BeginPlay에서 만들어 주 손 Grip에 Snap 장착한다.
+ *
+ * Tick 순서: 입력 → (필요하면) 컴포넌트에 포즈 적용 → 손 → 총 → 디버그
  */
 UCLASS()
 class XRFPS_API AXRFPSPawn : public APawn
@@ -37,6 +40,7 @@ class XRFPS_API AXRFPSPawn : public APawn
 public:
 	AXRFPSPawn();
 
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void NotifyControllerChanged() override;
@@ -52,7 +56,23 @@ public:
 	/** 총열을 받치는 손 */
 	UXRHandComponent* GetSupportHand() const;
 
+	/**
+	 * 무기를 주 손에 Snap으로 장착한다. 이미 들고 있던 무기는 제거한다.
+	 * 라운드 시작 시 기본 무기에 쓰고, 나중에 무기 교체(백로그)도 이 함수를 재사용한다.
+	 */
+	void EquipWeapon(AXRWeapon* Weapon);
+
+	/** 주 손이 쥔 무기. 없으면 nullptr */
+	AXRWeapon* GetEquippedWeapon() const;
+
 protected:
+	/**
+	 * 시작할 때 주 손에 장착할 무기 클래스. M1은 Pawn이 BeginPlay에서 직접 만든다.
+	 * (M2: 서버가 라운드 시작 때 만들어 장착한다)
+	 */
+	UPROPERTY(EditAnywhere, Category = "XR|Weapon")
+	TSubclassOf<AXRWeapon> DefaultWeaponClass;
+
 	/** 주 손. MVP는 오른손 고정이지만, 하드코딩 대신 이 값 하나로 정한다. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "XR")
 	EXRHandSide PrimaryHandSide = EXRHandSide::Right;

@@ -7,6 +7,7 @@
 #include "XRHandComponent.generated.h"
 
 struct FXRInputFrame;
+class AXRWeapon;
 class UMotionControllerComponent;
 
 /** 왼손 / 오른손 */
@@ -54,7 +55,14 @@ public:
 	UMotionControllerComponent* GetGripController() const { return GripController; }
 	UMotionControllerComponent* GetAimController() const { return AimController; }
 
+	/** 이 손이 쥐고 있는 무기. 주 손만 가진다. 없으면 nullptr */
+	AXRWeapon* GetHeldWeapon() const { return HeldWeapon; }
+	void SetHeldWeapon(AXRWeapon* InWeapon) { HeldWeapon = InWeapon; }
+
 private:
+	UPROPERTY(VisibleInstanceOnly, Transient, Category = "XR|Hand")
+	TObjectPtr<AXRWeapon> HeldWeapon;
+
 	UPROPERTY(VisibleAnywhere, Category = "XR|Hand")
 	EXRHandSide Side = EXRHandSide::Right;
 

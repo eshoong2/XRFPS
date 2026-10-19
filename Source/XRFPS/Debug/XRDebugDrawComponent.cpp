@@ -11,6 +11,8 @@
 #include "Player/XRFPSPawn.h"
 #include "Player/XRHandComponent.h"
 #include "Player/XRPoseComponent.h"
+#include "Weapon/XRWeapon.h"
+#include "Weapon/XRWeaponData.h"
 
 namespace XRDebugDraw
 {
@@ -23,6 +25,8 @@ namespace XRDebugDraw
 	constexpr float GripAxisSize = 8.f;
 	constexpr float AimAxisSize = 4.f;
 	constexpr float HeadAxisSize = 10.f;
+	constexpr float MuzzleAxisSize = 5.f;
+	constexpr float BarrelLineLength = 150.f;
 }
 
 UXRDebugDrawComponent::UXRDebugDrawComponent()
@@ -75,6 +79,18 @@ void UXRDebugDrawComponent::DrawDebug() const
 		}
 	}
 
+	// 총구: 축과, 총구 방향(X)으로 뻗는 노란 선. 이 선이 M1 4단계 사격 방향, 5단계 양손 파지 기준선(총열 선)이 된다
+	const AXRWeapon* Weapon = Pawn->GetEquippedWeapon();
+	if (Weapon)
+	{
+		const FTransform MuzzleTransform = Weapon->GetMuzzleTransform();
+		DrawAxes(MuzzleTransform, XRDebugDraw::MuzzleAxisSize, 0.4f);
+
+		const FVector Start = MuzzleTransform.GetLocation();
+		const FVector End = Start + MuzzleTransform.GetUnitAxis(EAxis::X) * XRDebugDraw::BarrelLineLength;
+		DrawDebugLine(World, Start, End, FColor::Yellow, false, -1.f, 0, 0.3f);
+	}
+
 	if (!GEngine)
 	{
 		return;
@@ -87,10 +103,11 @@ void UXRDebugDrawComponent::DrawDebug() const
 	const UXRHandComponent* Right = Pawn->GetHand(EXRHandSide::Right);
 
 	const FString Status = FString::Printf(
-		TEXT("Input: %s | Frame %d | Primary: %s | Trigger %.2f | Tracked L%d R%d"),
+		TEXT("Input: %s | Frame %d | Primary: %s | Weapon: %s | Trigger %.2f | Tracked L%d R%d"),
 		Source ? *Source->GetSourceName() : TEXT("None"),
 		Pose ? Pose->GetCurrentFrame().FrameNumber : -1,
 		(Primary && Primary->GetSide() == EXRHandSide::Left) ? TEXT("Left") : TEXT("Right"),
+		Weapon ? *Weapon->GetWeaponData()->DisplayName.ToString() : TEXT("None"),
 		Primary ? Primary->GetTriggerValue() : 0.f,
 		(Left && Left->IsTracked()) ? 1 : 0,
 		(Right && Right->IsTracked()) ? 1 : 0);

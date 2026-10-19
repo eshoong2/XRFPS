@@ -39,7 +39,8 @@ AXRFPSPawn (Actor)
  └─ Debug (UXRDebugDrawComponent)                디버그 표시
 
 AXRWeapon (Actor)
- ├─ Mesh + 소켓 (Grip, Muzzle, 보조 손 구간)
+ ├─ GripPoint (원점 = 손잡이를 쥔 손의 중심) + Muzzle (SceneComponent)
+ │    M1은 엔진 기본 도형을 조합한 임시 모양이라 메시 소켓 대신 SceneComponent로 위치를 표시 (M1-3 구현 중 변경)
  ├─ WeaponData (UXRWeaponData, 데이터 에셋)       무기별 기준값
  ├─ EvaluateTwoHandGrip()                        양손 파지 판정 + 총구 방향
  └─ TraceShot()                                  히트스캔 사격 판정
